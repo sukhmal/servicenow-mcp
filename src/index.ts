@@ -7,28 +7,53 @@ import { registerLogTools } from "./tools/logs.js";
 import { registerScriptTools } from "./tools/script.js";
 import { registerConfigItemTools } from "./tools/config-items.js";
 import { registerFlowTools } from "./tools/flow.js";
+import { registerSchemaTools } from "./tools/schema.js";
+import { registerUpdateSetTools } from "./tools/update-set.js";
+import { registerSystemTools } from "./tools/system.js";
+import { registerNotificationTools } from "./tools/notification.js";
+import { registerRestApiTools } from "./tools/rest-api.js";
+import { registerCatalogTools } from "./tools/catalog.js";
+import { registerWorkflowTools } from "./tools/workflow.js";
+import { registerCmdbTools } from "./tools/cmdb.js";
+import { registerImportSetTools } from "./tools/import-set.js";
+import { registerSecurityTools } from "./tools/security.js";
+import { registerUiTools } from "./tools/ui.js";
+import { registerSlaTools } from "./tools/sla.js";
 
 const config = loadConfig();
 const client = new ServiceNowClient(config);
 
 const server = new McpServer({
   name: "servicenow-mcp",
-  version: "1.0.0",
+  version: "2.0.0",
 });
 
-// Register all tool modules — each respects mode internally
-registerTableTools(server, client, config.mode);
-registerLogTools(server, client, config.mode);
-registerScriptTools(server, client, config.mode);
-registerConfigItemTools(server, client, config.mode);
-registerFlowTools(server, client, config.mode);
+const registrars = [
+  registerTableTools,
+  registerLogTools,
+  registerScriptTools,
+  registerConfigItemTools,
+  registerFlowTools,
+  registerSchemaTools,
+  registerUpdateSetTools,
+  registerSystemTools,
+  registerNotificationTools,
+  registerRestApiTools,
+  registerCatalogTools,
+  registerWorkflowTools,
+  registerCmdbTools,
+  registerImportSetTools,
+  registerSecurityTools,
+  registerUiTools,
+  registerSlaTools,
+];
 
-const debugToolCount = 17;
-const developToolCount = 28;
-const toolCount = config.mode === "develop" ? developToolCount : debugToolCount;
+for (const register of registrars) {
+  register(server, client, config.mode);
+}
 
 console.error(
-  `ServiceNow MCP Server started (mode: ${config.mode}, ${toolCount} tools registered)`
+  `ServiceNow MCP Server v2.0.0 started (mode: ${config.mode})`
 );
 console.error(`Instance: ${config.instanceUrl}`);
 

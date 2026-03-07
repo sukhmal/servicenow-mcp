@@ -13,10 +13,12 @@ export class ServiceNowApiError extends Error {
 }
 
 export class ServiceNowClient {
+  private instanceUrl: string;
   private baseUrl: string;
   private authHeader: string;
 
   constructor(config: ServiceNowConfig) {
+    this.instanceUrl = config.instanceUrl;
     this.baseUrl = `${config.instanceUrl}/api/now/table`;
     this.authHeader =
       "Basic " +
@@ -141,5 +143,41 @@ export class ServiceNowClient {
   async delete(tableName: string, sysId: string): Promise<void> {
     const url = this.buildUrl(tableName, sysId);
     await this.request("DELETE", url);
+  }
+
+  async aggregate(
+    tableName: string,
+    params: {
+      sysparm_query?: string;
+      sysparm_group_by?: string;
+      sysparm_count?: boolean;
+      sysparm_avg_fields?: string;
+      sysparm_sum_fields?: string;
+      sysparm_min_fields?: string;
+      sysparm_max_fields?: string;
+    }
+  ): Promise<Record<string, unknown>[]> {
+    const searchParams = new URLSearchParams();
+    if (params.sysparm_query) searchParams.set("sysparm_query", params.sysparm_query);
+    if (params.sysparm_group_by) searchParams.set("sysparm_group_by", params.sysparm_group_by);
+    if (params.sysparm_count) searchParams.set("sysparm_count", "true");
+    if (params.sysparm_avg_fields) searchParams.set("sysparm_avg_fields", params.sysparm_avg_fields);
+    if (params.sysparm_sum_fields) searchParams.set("sysparm_sum_fields", params.sysparm_sum_fields);
+    if (params.sysparm_min_fields) searchParams.set("sysparm_min_fields", params.sysparm_min_fields);
+    if (params.sysparm_max_fields) searchParams.set("sysparm_max_fields", params.sysparm_max_fields);
+    const qs = searchParams.toString();
+    const url = `${this.instanceUrl}/api/now/stats/${tableName}${qs ? `?${qs}` : ""}`;
+    const { data } = await this.request<{ result: Record<string, unknown>[] }>("GET", url);
+    return data.result;
+  }
+
+  async restApi<T = Record<string, unknown>>(
+    method: string,
+    apiPath: string,
+    body?: Record<string, unknown>
+  ): Promise<T> {
+    const url = `${this.instanceUrl}${apiPath}`;
+    const { data } = await this.request<T>(method, url, body);
+    return data;
   }
 }
