@@ -61,4 +61,4 @@ npm run dev                     # run with tsx (no build needed)
 
 ## Script Execution
 
-The `sn_script_execute` tool (develop mode only) runs server-side scripts on the instance. It auto-provisions a Scripted REST API (`MCP Script Runner` at `/api/global/mcp_script_runner/execute`) on first use. The API creates a temporary `sys_script_fix` record, evaluates it via `GlideScopedEvaluator`, then deletes the temp record. This gives full GlideRecord/GlideSystem access.
+The `sn_script_execute` tool (develop mode only) runs server-side scripts using ServiceNow's native Background Scripts engine (`sys.scripts.do`). The client establishes an authenticated session via `login.do`, obtains a CSRF token, then submits scripts as form POSTs — exactly as the Background Scripts UI does. Output from `gs.print()` is captured and returned. HTML entities in the response are automatically decoded. Session is cached and auto-refreshed on expiry.

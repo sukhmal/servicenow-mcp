@@ -26,7 +26,7 @@ This server covers **every major ServiceNow module** — giving an AI assistant 
 | **Service Portal** | Browse portals, pages, widgets (with full HTML/CSS/scripts), and Angular providers |
 | **SLAs** | Inspect SLA definitions and active task SLA tracking records |
 | **System Config** | Search system properties, scheduled jobs, application scopes, and modules |
-| **Script Execution** | Run arbitrary server-side JavaScript on the instance — like Background Scripts but via API. Full GlideRecord/GlideSystem access. |
+| **Script Execution** | Run server-side JavaScript using the native Background Scripts engine (sys.scripts.do). Full GlideRecord/GlideSystem/GlideAggregate access. |
 | **Logs & Diagnostics** | Query syslog, transaction logs, get aggregate statistics for any table, analyze all customizations on a table |
 
 ## Modes
@@ -267,7 +267,7 @@ SERVICENOW_ENV_FILE=.env npx @modelcontextprotocol/inspector node dist/index.js
 ### Script Execution
 | Tool | Mode | Description |
 |------|------|-------------|
-| `sn_script_execute` | Develop | Execute arbitrary server-side scripts (like Background Scripts). Full GlideRecord/GlideSystem access. Auto-provisions a Scripted REST API on first use. |
+| `sn_script_execute` | Develop | Execute server-side scripts using the native Background Scripts engine (sys.scripts.do). Full GlideRecord, gs, GlideAggregate, GlideDateTime access. |
 | `sn_script_execute_query` | Develop | Convenience wrapper — run a GlideRecord query with display values without writing boilerplate |
 
 ### System Logs
