@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A comprehensive MCP (Model Context Protocol) server providing expert-level access to ServiceNow instances. v2.0.0 with 105 tools across 17 modules.
+A comprehensive MCP (Model Context Protocol) server providing expert-level access to ServiceNow instances. v2.0.0 with 107 tools across 18 modules.
 
 ## Architecture
 
@@ -58,3 +58,7 @@ npm run dev                     # run with tsx (no build needed)
 - `SERVICENOW_USERNAME` / `SERVICENOW_PASSWORD` — Basic Auth credentials
 - `SERVICENOW_MODE` — `debug` (read-only, default) or `develop` (read-write)
 - `SERVICENOW_ENV_FILE` — path to .env file (default: `.env`)
+
+## Script Execution
+
+The `sn_script_execute` tool (develop mode only) runs server-side scripts on the instance. It auto-provisions a Scripted REST API (`MCP Script Runner` at `/api/global/mcp_script_runner/execute`) on first use. The API creates a temporary `sys_script_fix` record, evaluates it via `GlideScopedEvaluator`, then deletes the temp record. This gives full GlideRecord/GlideSystem access.
