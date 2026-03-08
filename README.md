@@ -28,6 +28,8 @@ This server covers **every major ServiceNow module** — giving an AI assistant 
 | **System Config** | Search system properties, scheduled jobs, application scopes, and modules |
 | **Data Policies** | Inspect server-side mandatory/read-only rules that apply to API calls, import sets, and forms — debug why field validation fails |
 | **Script Execution** | Run server-side JavaScript using the native Background Scripts engine (sys.scripts.do). Full GlideRecord/GlideSystem/GlideAggregate access. |
+| **Procurement** | Platform-level vendors, contracts, legacy purchase orders, cost centers, expense lines, approvals, transfer orders, stockrooms, spend analysis |
+| **Source-to-Pay (S2P)** | Full S2P lifecycle: sourcing requests, sourcing events (RFQ/RFP), negotiations, supplier awards, purchase requisitions, purchase orders, PO lines, receipts, invoices, invoice matching/exceptions/cases, procurement cases, approval plans, suppliers, payment terms, GL accounts, legal/purchasing entities, ERP integration |
 | **Logs & Diagnostics** | Query syslog, transaction logs, get aggregate statistics for any table, analyze all customizations on a table |
 
 ## Modes
@@ -278,6 +280,72 @@ SERVICENOW_ENV_FILE=.env npx @modelcontextprotocol/inspector node dist/index.js
 |------|------|-------------|
 | `sn_script_execute` | Develop | Execute server-side scripts using the native Background Scripts engine (sys.scripts.do). Full GlideRecord, gs, GlideAggregate, GlideDateTime access. |
 | `sn_script_execute_query` | Develop | Convenience wrapper — run a GlideRecord query with display values without writing boilerplate |
+
+### Procurement & Vendor Management
+| Tool | Mode | Description |
+|------|------|-------------|
+| `sn_vendor_list` | Both | List vendors (core_company where vendor=true) |
+| `sn_vendor_get` | Both | Get vendor details with contracts and catalog items |
+| `sn_vendor_type_list` | Both | List vendor types |
+| `sn_contract_list` | Both | List contracts by vendor, state, PO number, dates |
+| `sn_contract_get` | Both | Get contract with terms, covered assets, covered users |
+| `sn_purchase_order_list` | Both | List legacy purchase orders (proc_po) |
+| `sn_purchase_order_get` | Both | Get legacy PO with line items |
+| `sn_cost_center_list` | Both | List cost centers |
+| `sn_expense_line_list` | Both | List expense lines for spend analysis |
+| `sn_approval_list` | Both | List approvals for procurement records |
+| `sn_transfer_order_list` | Both | List transfer orders |
+| `sn_stockroom_list` | Both | List stockrooms |
+| `sn_procurement_spend_analysis` | Both | Aggregate spend analysis by vendor/cost center/state |
+| `sn_contract_create` | Develop | Create a new contract |
+| `sn_contract_update` | Develop | Update a contract |
+| `sn_vendor_create` | Develop | Create a new vendor |
+| `sn_vendor_update` | Develop | Update a vendor |
+
+### Source-to-Pay Operations (S2P)
+| Tool | Mode | Description |
+|------|------|-------------|
+| `sn_s2p_sourcing_request_list` | Both | List sourcing requests — starting point of the sourcing workflow |
+| `sn_s2p_sourcing_request_get` | Both | Get sourcing request with purchase lines, tasks, and negotiations |
+| `sn_s2p_sourcing_event_list` | Both | List sourcing events (RFQ/RFP/RFI) for competitive bidding |
+| `sn_s2p_sourcing_event_get` | Both | Get sourcing event with requests, negotiations, and contracts |
+| `sn_s2p_negotiation_list` | Both | List negotiations — supplier bids and award status |
+| `sn_s2p_sourcing_task_list` | Both | List sourcing tasks |
+| `sn_s2p_supplier_list` | Both | List S2P suppliers with onboarding, DUNS, tax, payment terms |
+| `sn_s2p_supplier_get` | Both | Get supplier with legal entity mappings and payment info |
+| `sn_s2p_requisition_list` | Both | List S2P purchase requisitions |
+| `sn_s2p_requisition_get` | Both | Get requisition with line items |
+| `sn_s2p_po_list` | Both | List S2P purchase orders with invoiced/received amounts |
+| `sn_s2p_po_get` | Both | Get PO with lines, receipts, cost allocations, linked contracts |
+| `sn_s2p_po_line_list` | Both | List PO line items — track receipt and invoice status |
+| `sn_s2p_receipt_list` | Both | List receipts (goods received against PO lines) |
+| `sn_s2p_invoice_list` | Both | List S2P invoices with matching and approval status |
+| `sn_s2p_invoice_get` | Both | Get invoice with lines, tax, payments, and exceptions |
+| `sn_s2p_invoice_exception_list` | Both | List invoice exceptions — debug matching failures |
+| `sn_s2p_invoice_case_list` | Both | List invoice cases for disputes and payment issues |
+| `sn_s2p_procurement_case_list` | Both | List procurement cases (employee requests to procurement) |
+| `sn_s2p_procurement_case_get` | Both | Get procurement case with lines and tasks |
+| `sn_s2p_approval_plan_list` | Both | List S2P approval plans and rules |
+| `sn_s2p_task_list` | Both | List purchasing tasks |
+| `sn_s2p_supplier_product_list` | Both | List supplier products in S2P catalog |
+| `sn_s2p_payment_term_list` | Both | List payment terms (Net 30, Net 60, etc.) |
+| `sn_s2p_delivery_location_list` | Both | List delivery locations |
+| `sn_s2p_shipping_method_list` | Both | List shipping methods |
+| `sn_s2p_product_group_list` | Both | List product groups |
+| `sn_s2p_legal_entity_list` | Both | List legal entities (buying organizations) |
+| `sn_s2p_purchasing_entity_list` | Both | List purchasing entities |
+| `sn_s2p_gl_account_list` | Both | List GL accounts for financial coding |
+| `sn_s2p_tax_code_list` | Both | List tax codes |
+| `sn_s2p_erp_source_list` | Both | List ERP sources (SAP, Oracle integrations) |
+| `sn_s2p_period_list` | Both | List fiscal periods |
+| `sn_s2p_uom_list` | Both | List units of measure |
+| `sn_s2p_erp_error_list` | Both | List ERP integration errors |
+| `sn_s2p_tolerance_rule_list` | Both | List invoice tolerance rules |
+| `sn_s2p_supplier_create` | Develop | Create an S2P supplier |
+| `sn_s2p_supplier_update` | Develop | Update an S2P supplier |
+| `sn_s2p_po_create` | Develop | Create an S2P purchase order |
+| `sn_s2p_po_update` | Develop | Update an S2P purchase order |
+| `sn_s2p_invoice_update` | Develop | Update an S2P invoice |
 
 ### System Logs
 | Tool | Mode | Description |

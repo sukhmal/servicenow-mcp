@@ -21,6 +21,8 @@ import { registerUiTools } from "./tools/ui.js";
 import { registerSlaTools } from "./tools/sla.js";
 import { registerExecuteTools } from "./tools/execute.js";
 import { registerDataPolicyTools } from "./tools/data-policy.js";
+import { registerProcurementTools } from "./tools/procurement.js";
+import { registerS2pTools } from "./tools/s2p.js";
 
 const config = loadConfig();
 const client = new ServiceNowClient(config);
@@ -50,6 +52,8 @@ const registrars = [
   registerSlaTools,
   registerExecuteTools,
   registerDataPolicyTools,
+  registerProcurementTools,
+  registerS2pTools,
 ];
 
 for (const register of registrars) {

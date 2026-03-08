@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A comprehensive MCP (Model Context Protocol) server providing expert-level access to ServiceNow instances. v2.0.0 with 107 tools across 18 modules.
+A comprehensive MCP (Model Context Protocol) server providing expert-level access to ServiceNow instances. v2.0.0 with 169 tools across 20 modules.
 
 ## Architecture
 

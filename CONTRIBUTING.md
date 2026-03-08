@@ -28,6 +28,8 @@ src/
     ├── system.ts         # System properties, scheduled jobs, app scopes, aggregates
     ├── data-policy.ts    # Data policies and field rules (server-side enforcement)
     ├── execute.ts        # Background script execution via native sys.scripts.do
+    ├── procurement.ts    # Vendors, contracts, legacy POs, cost centers, expenses, approvals
+    ├── s2p.ts            # Source-to-Pay: suppliers, requisitions, POs, receipts, invoices, cases
     └── logs.ts           # Syslog and transaction logs
 ```
 
