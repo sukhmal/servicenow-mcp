@@ -26,6 +26,7 @@ This server covers **every major ServiceNow module** — giving an AI assistant 
 | **Service Portal** | Browse portals, pages, widgets (with full HTML/CSS/scripts), and Angular providers |
 | **SLAs** | Inspect SLA definitions and active task SLA tracking records |
 | **System Config** | Search system properties, scheduled jobs, application scopes, and modules |
+| **Data Policies** | Inspect server-side mandatory/read-only rules that apply to API calls, import sets, and forms — debug why field validation fails |
 | **Script Execution** | Run server-side JavaScript using the native Background Scripts engine (sys.scripts.do). Full GlideRecord/GlideSystem/GlideAggregate access. |
 | **Logs & Diagnostics** | Query syslog, transaction logs, get aggregate statistics for any table, analyze all customizations on a table |
 
@@ -263,6 +264,14 @@ SERVICENOW_ENV_FILE=.env npx @modelcontextprotocol/inspector node dist/index.js
 | `sn_app_modules` | Both | List application modules |
 | `sn_aggregate` | Both | Get aggregate stats (count/sum/avg/min/max) for any table |
 | `sn_table_impact` | Both | Analyze all customizations affecting a table |
+
+### Data Policies
+| Tool | Mode | Description |
+|------|------|-------------|
+| `sn_data_policy_list` | Both | List data policies — server-side mandatory/read-only enforcement that applies to API, import sets, and UI |
+| `sn_data_policy_get` | Both | Get data policy with all its field rules |
+| `sn_data_policy_rules` | Both | List field rules for a data policy |
+| `sn_data_policy_for_table` | Both | Get all active data policies + rules for a table in one call — debug mandatory field errors |
 
 ### Script Execution
 | Tool | Mode | Description |

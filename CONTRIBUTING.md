@@ -26,7 +26,8 @@ src/
     ├── ui.ts             # UI pages, macros, scripts, forms, Service Portal widgets
     ├── sla.ts            # SLA definitions and task SLA records
     ├── system.ts         # System properties, scheduled jobs, app scopes, aggregates
-    ├── execute.ts        # Background script execution via Scripted REST API
+    ├── data-policy.ts    # Data policies and field rules (server-side enforcement)
+    ├── execute.ts        # Background script execution via native sys.scripts.do
     └── logs.ts           # Syslog and transaction logs
 ```
 
