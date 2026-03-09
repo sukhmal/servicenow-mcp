@@ -31,6 +31,11 @@ src/
     ├── procurement.ts    # Vendors, contracts, legacy POs, cost centers, expenses, approvals
     ├── s2p.ts            # Source-to-Pay: suppliers, requisitions, POs, receipts, invoices, cases
     └── logs.ts           # Syslog and transaction logs
+
+.claude/
+└── skills/
+    └── servicenow-sourcing-procurement/
+        └── SKILL.md      # Claude Code skill for S2P debugging & development
 ```
 
 ## Adding a New Tool Module

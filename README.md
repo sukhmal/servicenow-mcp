@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A comprehensive MCP (Model Context Protocol) server that gives AI assistants expert-level access to any ServiceNow module. Connects to a ServiceNow instance via Basic Auth and provides tools for debugging, inspecting configuration, and building features across the entire platform.
+A comprehensive MCP (Model Context Protocol) server that gives AI assistants expert-level access to any ServiceNow module. 169 tools across 21 modules. Connects to a ServiceNow instance via Basic Auth and provides tools for debugging, inspecting configuration, and building features across the entire platform.
 
 ## Capabilities
 
@@ -93,6 +93,21 @@ Add to `.mcp.json` in your project root:
 ```bash
 SERVICENOW_ENV_FILE=.env npx @modelcontextprotocol/inspector node dist/index.js
 ```
+
+## Claude Code Skills
+
+This project includes a Claude Code skill for S2P development and debugging:
+
+```
+/servicenow-sourcing-procurement [describe what you want to debug or develop]
+```
+
+The skill provides:
+- **Live instance schema discovery** — query `sys_dictionary` and `sys_db_object` to find tables and columns
+- **Plugin validation** — verify S2P plugins (`sn_shop`, `sn_fin`, `sn_ap_apm`, etc.) are installed and active
+- **Workflow debugging** — trace sourcing requests end-to-end, debug approval routing, invoice matching failures, and ERP integration errors
+- **Tool building templates** — exact patterns, client API reference, and query syntax for creating new tools
+- **MCP Inspector testing** — build and test tools against a live instance
 
 ## Tool Reference
 
