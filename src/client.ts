@@ -1,4 +1,4 @@
-import type { ServiceNowConfig, QueryParams, PaginatedResult } from "./types.js";
+import type { ServiceNowConfig, QueryParams, PaginatedResult, BackgroundScriptResult } from "./types.js";
 
 export class ServiceNowApiError extends Error {
   constructor(
@@ -13,11 +13,21 @@ export class ServiceNowApiError extends Error {
 }
 
 export class ServiceNowClient {
+  private instanceUrl: string;
   private baseUrl: string;
   private authHeader: string;
+  private username: string;
+  private password: string;
+
+  // Session state for background script execution
+  private sessionCookies: string | null = null;
+  private csrfToken: string | null = null;
 
   constructor(config: ServiceNowConfig) {
+    this.instanceUrl = config.instanceUrl;
     this.baseUrl = `${config.instanceUrl}/api/now/table`;
+    this.username = config.username;
+    this.password = config.password;
     this.authHeader =
       "Basic " +
       Buffer.from(`${config.username}:${config.password}`).toString("base64");
@@ -141,5 +151,165 @@ export class ServiceNowClient {
   async delete(tableName: string, sysId: string): Promise<void> {
     const url = this.buildUrl(tableName, sysId);
     await this.request("DELETE", url);
+  }
+
+  async aggregate(
+    tableName: string,
+    params: {
+      sysparm_query?: string;
+      sysparm_group_by?: string;
+      sysparm_count?: boolean;
+      sysparm_avg_fields?: string;
+      sysparm_sum_fields?: string;
+      sysparm_min_fields?: string;
+      sysparm_max_fields?: string;
+    }
+  ): Promise<Record<string, unknown>[]> {
+    const searchParams = new URLSearchParams();
+    if (params.sysparm_query) searchParams.set("sysparm_query", params.sysparm_query);
+    if (params.sysparm_group_by) searchParams.set("sysparm_group_by", params.sysparm_group_by);
+    if (params.sysparm_count) searchParams.set("sysparm_count", "true");
+    if (params.sysparm_avg_fields) searchParams.set("sysparm_avg_fields", params.sysparm_avg_fields);
+    if (params.sysparm_sum_fields) searchParams.set("sysparm_sum_fields", params.sysparm_sum_fields);
+    if (params.sysparm_min_fields) searchParams.set("sysparm_min_fields", params.sysparm_min_fields);
+    if (params.sysparm_max_fields) searchParams.set("sysparm_max_fields", params.sysparm_max_fields);
+    const qs = searchParams.toString();
+    const url = `${this.instanceUrl}/api/now/stats/${tableName}${qs ? `?${qs}` : ""}`;
+    const { data } = await this.request<{ result: Record<string, unknown>[] }>("GET", url);
+    return data.result;
+  }
+
+  async restApi<T = Record<string, unknown>>(
+    method: string,
+    apiPath: string,
+    body?: Record<string, unknown>
+  ): Promise<T> {
+    const url = `${this.instanceUrl}${apiPath}`;
+    const { data } = await this.request<T>(method, url, body);
+    return data;
+  }
+
+  private async ensureSession(): Promise<void> {
+    if (this.sessionCookies && this.csrfToken) return;
+
+    // Login via form POST to get an authenticated session
+    const loginForm = new URLSearchParams();
+    loginForm.set("user_name", this.username);
+    loginForm.set("user_password", this.password);
+    loginForm.set("sys_action", "sysverb_login");
+
+    const loginResp = await fetch(`${this.instanceUrl}/login.do`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: loginForm.toString(),
+      redirect: "manual",
+    });
+
+    const loginCookies = loginResp.headers.getSetCookie();
+
+    // Load the background scripts page to get CSRF token
+    const cookieStr = loginCookies.map((c) => c.split(";")[0]).join("; ");
+    const pageResp = await fetch(`${this.instanceUrl}/sys.scripts.do`, {
+      headers: { Cookie: cookieStr },
+    });
+    const pageBody = await pageResp.text();
+    const pageCookies = pageResp.headers.getSetCookie();
+
+    // Merge and deduplicate cookies
+    const allCookies = [...loginCookies, ...pageCookies].map((c) => c.split(";")[0]);
+    const cookieMap: Record<string, string> = {};
+    for (const c of allCookies) {
+      const [name] = c.split("=");
+      cookieMap[name] = c;
+    }
+    this.sessionCookies = Object.values(cookieMap).join("; ");
+
+    // Extract CSRF token from hidden form field
+    const ckMatch = pageBody.match(/name="sysparm_ck"[^>]*value="([^"]+)"/);
+    if (!ckMatch) {
+      throw new Error("Failed to obtain CSRF token from background scripts page");
+    }
+    this.csrfToken = ckMatch[1];
+  }
+
+  async executeBackgroundScript(
+    script: string,
+    scope: string = "global"
+  ): Promise<BackgroundScriptResult> {
+    await this.ensureSession();
+
+    const formData = new URLSearchParams();
+    formData.set("script", script);
+    formData.set("runscript", "Run script");
+    formData.set("sys_scope", scope);
+    formData.set("quota_managed_transaction", "on");
+    formData.set("record_for_rollback", "on");
+    formData.set("sysparm_ck", this.csrfToken!);
+
+    const resp = await fetch(`${this.instanceUrl}/sys.scripts.do`, {
+      method: "POST",
+      headers: {
+        Cookie: this.sessionCookies!,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData.toString(),
+    });
+
+    if (!resp.ok) {
+      // Session may have expired — reset and retry once
+      this.sessionCookies = null;
+      this.csrfToken = null;
+      await this.ensureSession();
+
+      formData.set("sysparm_ck", this.csrfToken!);
+      const retryResp = await fetch(`${this.instanceUrl}/sys.scripts.do`, {
+        method: "POST",
+        headers: {
+          Cookie: this.sessionCookies!,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString(),
+      });
+
+      if (!retryResp.ok) {
+        throw new Error(`Background script execution failed with status ${retryResp.status}`);
+      }
+
+      return this.parseBackgroundScriptOutput(await retryResp.text());
+    }
+
+    return this.parseBackgroundScriptOutput(await resp.text());
+  }
+
+  private parseBackgroundScriptOutput(html: string): BackgroundScriptResult {
+    const preMatch = html.match(/<pre>([\s\S]*?)<\/pre>/i);
+    if (!preMatch) {
+      return { success: true, output: "" };
+    }
+
+    const raw = preMatch[1];
+
+    // Check for script compilation errors
+    if (raw.includes("Script compilation error") || raw.includes("Javascript compiler exception")) {
+      const errorDesc = raw.match(/Error Description: ([^,]+)/)?.[1]
+        ?? raw.match(/Javascript compiler exception: ([^\n<]+)/)?.[1]
+        ?? "Script compilation error";
+      return { success: false, output: "", error: errorDesc.trim() };
+    }
+
+    // Clean HTML artifacts from output
+    const output = raw
+      .replace(/<BR\/>/gi, "\n")
+      .replace(/<[^>]+>/g, "")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&amp;/g, "&")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&apos;/g, "'")
+      .replace(/\*\*\* Script: /g, "")
+      .trim();
+
+    return { success: true, output };
   }
 }

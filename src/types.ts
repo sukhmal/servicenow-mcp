@@ -29,6 +29,12 @@ export interface PaginatedResult<T = Record<string, unknown>> {
   offset: number;
 }
 
+export interface BackgroundScriptResult {
+  success: boolean;
+  output: string;
+  error?: string;
+}
+
 export type RegisterTools = (
   server: McpServer,
   client: ServiceNowClient,
