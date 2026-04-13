@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A comprehensive MCP (Model Context Protocol) server providing expert-level access to ServiceNow instances. v2.0.0 with 169 tools across 21 modules.
+A comprehensive MCP (Model Context Protocol) server providing expert-level access to ServiceNow instances. v3.0.0 with 299 tools across 44 modules.
 
 ## Architecture
 
@@ -11,7 +11,7 @@ A comprehensive MCP (Model Context Protocol) server providing expert-level acces
 - **Config**: `src/config.ts` — loads and validates env vars via Zod
 - **Types**: `src/types.ts` — shared TypeScript types (`Mode`, `ServiceNowConfig`, `QueryParams`, `PaginatedResult`)
 - **Utils**: `src/utils.ts` — shared helpers (`errorResult`, `jsonResult`, `textResult`, `buildQuery`)
-- **Tools**: `src/tools/*.ts` — each file exports a `registerXxxTools(server, client, mode)` function
+- **Tools**: `src/tools/*.ts` — 44 tool modules, each exports a `registerXxxTools(server, client, mode)` function
 
 ## Tool Module Pattern
 

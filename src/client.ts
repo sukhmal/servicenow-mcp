@@ -281,6 +281,54 @@ export class ServiceNowClient {
     return this.parseBackgroundScriptOutput(await resp.text());
   }
 
+  async attachmentQuery(
+    tableName: string,
+    tableSysId?: string,
+    params: { sysparm_limit?: number; sysparm_offset?: number } = {}
+  ): Promise<{ records: Record<string, unknown>[]; totalCount: number }> {
+    const searchParams = new URLSearchParams();
+    const queryParts: string[] = [];
+    if (tableName) queryParts.push(`table_name=${tableName}`);
+    if (tableSysId) queryParts.push(`table_sys_id=${tableSysId}`);
+    if (queryParts.length) searchParams.set("sysparm_query", queryParts.join("^"));
+    if (params.sysparm_limit !== undefined) searchParams.set("sysparm_limit", String(params.sysparm_limit));
+    if (params.sysparm_offset !== undefined) searchParams.set("sysparm_offset", String(params.sysparm_offset));
+    const qs = searchParams.toString();
+    const url = `${this.instanceUrl}/api/now/attachment${qs ? `?${qs}` : ""}`;
+    const { data, totalCount } = await this.request<{ result: Record<string, unknown>[] }>("GET", url);
+    return { records: data.result, totalCount: totalCount ?? data.result.length };
+  }
+
+  async attachmentGetById(sysId: string): Promise<Record<string, unknown>> {
+    const url = `${this.instanceUrl}/api/now/attachment/${sysId}`;
+    const { data } = await this.request<{ result: Record<string, unknown> }>("GET", url);
+    return data.result;
+  }
+
+  async attachmentDelete(sysId: string): Promise<void> {
+    const url = `${this.instanceUrl}/api/now/attachment/${sysId}`;
+    await this.request("DELETE", url);
+  }
+
+  async batchRequest(
+    requests: Array<{ id: string; url: string; method: string; body?: Record<string, unknown>; headers?: Array<{ name: string; value: string }> }>
+  ): Promise<Record<string, unknown>> {
+    const url = `${this.instanceUrl}/api/now/v1/batch`;
+    const payload = {
+      batch_request_id: Date.now().toString(),
+      rest_requests: requests.map((r) => ({
+        id: r.id,
+        url: r.url,
+        method: r.method,
+        headers: r.headers ?? [{ name: "Content-Type", value: "application/json" }],
+        ...(r.body ? { body: Buffer.from(JSON.stringify(r.body)).toString("base64") } : {}),
+        exclude_response_headers: true,
+      })),
+    };
+    const { data } = await this.request<Record<string, unknown>>("POST", url, payload as unknown as Record<string, unknown>);
+    return data;
+  }
+
   private parseBackgroundScriptOutput(html: string): BackgroundScriptResult {
     const preMatch = html.match(/<pre>([\s\S]*?)<\/pre>/i);
     if (!preMatch) {
