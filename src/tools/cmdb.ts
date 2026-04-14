@@ -19,8 +19,8 @@ export function registerCmdbTools(
       environment: z.string().optional().describe("Filter by environment (e.g. 'Production', 'Development')"),
       support_group: z.string().optional().describe("Filter by support group name (contains match)"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ ci_class, name, operational_status, environment, support_group, query, limit, offset }) => {
       try {
@@ -75,7 +75,7 @@ export function registerCmdbTools(
       ci_sys_id: z.string().describe("The sys_id of the CI to find relationships for"),
       direction: z.enum(["parent", "child", "both"]).optional().describe("Direction: 'parent' = CIs this depends on, 'child' = CIs that depend on this, 'both' (default)"),
       rel_type: z.string().optional().describe("Filter by relationship type name (contains match), e.g. 'Runs on', 'Hosted on'"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ ci_sys_id, direction, rel_type, limit }) => {
       try {
@@ -119,7 +119,7 @@ export function registerCmdbTools(
     {
       parent_class: z.string().optional().describe("Filter by parent class name, e.g. 'cmdb_ci' for direct children"),
       name: z.string().optional().describe("Filter by class name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ parent_class, name, limit }) => {
       try {

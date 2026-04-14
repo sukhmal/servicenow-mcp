@@ -16,8 +16,8 @@ export function registerWorkflowTools(
       name: z.string().optional().describe("Filter by workflow name (contains match)"),
       table: z.string().optional().describe("Filter by table name"),
       active: z.boolean().optional().describe("Filter by active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, table, active, limit, offset }) => {
       try {
@@ -122,7 +122,7 @@ export function registerWorkflowTools(
       table: z.string().optional().describe("Filter by table name of the record"),
       document_id: z.string().optional().describe("Filter by the sys_id of the record being processed"),
       state: z.enum(["executing", "finished", "cancelled"]).optional().describe("Filter by execution state"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ workflow_sys_id, table, document_id, state, limit }) => {
       try {

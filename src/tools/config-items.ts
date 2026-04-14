@@ -33,8 +33,8 @@ export function registerConfigItemTools(
         .describe("Filter by operation type"),
       type: z.string().optional().describe("Filter by ACL type (e.g. 'record')"),
       active: z.boolean().optional().describe("Filter by active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ table, operation, type, active, limit, offset }) => {
       try {
@@ -103,8 +103,8 @@ export function registerConfigItemTools(
     {
       table: z.string().optional().describe("Filter by table name"),
       active: z.boolean().optional().describe("Filter by active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ table, active, limit, offset }) => {
       try {
@@ -229,8 +229,8 @@ export function registerConfigItemTools(
     {
       table: z.string().optional().describe("Filter by table name"),
       active: z.boolean().optional().describe("Filter by active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ table, active, limit, offset }) => {
       try {

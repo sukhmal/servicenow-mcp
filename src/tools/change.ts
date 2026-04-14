@@ -22,8 +22,8 @@ export function registerChangeTools(
       start_before: z.string().optional().describe("Planned start before datetime"),
       active: z.boolean().optional().describe("Filter by active status"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ type, state, risk, assignment_group, category, start_after, start_before, active, query, limit, offset }) => {
       try {
@@ -109,7 +109,7 @@ export function registerChangeTools(
       state: z.string().optional().describe("Filter by state"),
       change_task_type: z.string().optional().describe("Filter by task type (e.g., planning, implementation, review, testing)"),
       assignment_group: z.string().optional().describe("Assignment group name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ change_request, state, change_task_type, assignment_group, limit }) => {
       try {
@@ -139,7 +139,7 @@ export function registerChangeTools(
     {
       active: z.boolean().optional().describe("Filter by active status (default true)"),
       category: z.string().optional().describe("Category filter"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ active, category, limit }) => {
       try {

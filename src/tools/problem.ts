@@ -20,8 +20,8 @@ export function registerProblemTools(
       active: z.boolean().optional().describe("Filter by active status"),
       known_error: z.boolean().optional().describe("Filter by known error flag"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ priority, state, assignment_group, category, active, known_error, query, limit, offset }) => {
       try {
@@ -86,7 +86,7 @@ export function registerProblemTools(
       category: z.string().optional().describe("Category filter"),
       query: z.string().optional().describe("Search in short_description or workaround"),
       active: z.boolean().optional().describe("Filter by active (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ category, query, active, limit }) => {
       try {

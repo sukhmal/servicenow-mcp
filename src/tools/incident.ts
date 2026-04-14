@@ -23,8 +23,8 @@ export function registerIncidentTools(
       opened_before: z.string().optional().describe("Opened before datetime"),
       active: z.boolean().optional().describe("Filter by active status"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ priority, state, assignment_group, assigned_to, category, caller, opened_after, opened_before, active, query, limit, offset }) => {
       try {
@@ -124,7 +124,7 @@ export function registerIncidentTools(
     {
       state: z.string().optional().describe("Filter by major incident state"),
       active: z.boolean().optional().describe("Filter by active status (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ state, active, limit }) => {
       try {

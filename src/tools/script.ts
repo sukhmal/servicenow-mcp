@@ -59,8 +59,8 @@ export function registerScriptTools(
         .describe("Filter by table name (for business rules and client scripts)"),
       active: z.boolean().optional().describe("Filter by active status"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ type, table, active, query, limit, offset }) => {
       try {
@@ -132,7 +132,7 @@ export function registerScriptTools(
         .string()
         .describe("Text to search for in script name or body"),
       table: z.string().optional().describe("Filter by table name"),
-      limit: z.number().min(1).max(50).optional().describe("Max records (default 10)"),
+      limit: z.coerce.number().min(1).max(50).optional().describe("Max records (default 10)"),
     },
     async ({ type, search_text, table, limit }) => {
       try {

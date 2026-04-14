@@ -21,8 +21,8 @@ export function registerCsmTools(
       assignment_group: z.string().optional().describe("Assignment group name (contains match)"),
       active: z.boolean().optional().describe("Filter by active status"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ priority, state, account, contact, product, assignment_group, active, query, limit, offset }) => {
       try {
@@ -87,7 +87,7 @@ export function registerCsmTools(
       name: z.string().optional().describe("Account name (contains match)"),
       account_code: z.string().optional().describe("Account code"),
       active: z.boolean().optional().describe("Active status (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, account_code, active, limit }) => {
       try {
@@ -119,7 +119,7 @@ export function registerCsmTools(
       name: z.string().optional().describe("Contact name (contains match)"),
       email: z.string().optional().describe("Email (contains match)"),
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ account, name, email, active, limit }) => {
       try {

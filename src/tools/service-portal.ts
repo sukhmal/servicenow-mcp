@@ -15,7 +15,7 @@ export function registerServicePortalTools(
     {
       title: z.string().optional().describe("Portal title (contains match)"),
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ title, active, limit }) => {
       try {
@@ -43,7 +43,7 @@ export function registerServicePortalTools(
     {
       title: z.string().optional().describe("Page title (contains match)"),
       id: z.string().optional().describe("Page ID (URL path)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ title, id, limit }) => {
       try {
@@ -72,7 +72,7 @@ export function registerServicePortalTools(
       name: z.string().optional().describe("Widget name (contains match)"),
       id: z.string().optional().describe("Widget ID"),
       category: z.string().optional().describe("Category"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, id, category, limit }) => {
       try {
@@ -124,7 +124,7 @@ export function registerServicePortalTools(
     "List Service Portal themes",
     {
       name: z.string().optional().describe("Theme name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, limit }) => {
       try {
@@ -151,7 +151,7 @@ export function registerServicePortalTools(
     {
       name: z.string().optional().describe("Provider name (contains match)"),
       type: z.string().optional().describe("Provider type (factory, service, directive)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, type, limit }) => {
       try {

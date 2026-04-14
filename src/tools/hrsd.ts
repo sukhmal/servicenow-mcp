@@ -21,8 +21,8 @@ export function registerHrsdTools(
       sys_class_name: z.string().optional().describe("Case type: sn_hr_core_case, sn_hr_le_case, sn_hr_er_case"),
       active: z.boolean().optional().describe("Filter by active status"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ state, hr_service, subject_person, opened_for, assignment_group, sys_class_name, active, query, limit, offset }) => {
       try {
@@ -81,7 +81,7 @@ export function registerHrsdTools(
     {
       active: z.boolean().optional().describe("Active status (default true)"),
       topic: z.string().optional().describe("Topic/category name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ active, topic, limit }) => {
       try {
@@ -112,7 +112,7 @@ export function registerHrsdTools(
       subject_person: z.string().optional().describe("Subject person name (contains match)"),
       lifecycle_event_type: z.string().optional().describe("Lifecycle event type"),
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ state, subject_person, lifecycle_event_type, active, limit }) => {
       try {

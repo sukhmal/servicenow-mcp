@@ -38,7 +38,7 @@ export function registerLogTools(
         .string()
         .optional()
         .describe("End of time range, e.g. '2024-01-02 00:00:00'"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ level, source, message, start_time, end_time, limit }) => {
       try {
@@ -102,7 +102,7 @@ export function registerLogTools(
         .string()
         .optional()
         .describe("End of time range, e.g. '2024-01-02 00:00:00'"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ url, status, start_time, end_time, limit }) => {
       try {

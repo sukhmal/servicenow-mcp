@@ -27,8 +27,8 @@ export function registerFlowTools(
       active: z.boolean().optional().describe("Filter by active status"),
       scope: z.string().optional().describe("Filter by application scope"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ active, scope, query, limit, offset }) => {
       try {
@@ -94,8 +94,8 @@ export function registerFlowTools(
     {
       active: z.boolean().optional().describe("Filter by active status"),
       scope: z.string().optional().describe("Filter by application scope"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ active, scope, limit, offset }) => {
       try {

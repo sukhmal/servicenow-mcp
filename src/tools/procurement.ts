@@ -18,8 +18,8 @@ export function registerProcurementTools(
       name: z.string().optional().describe("Filter by vendor name (contains match)"),
       vendor_type: z.string().optional().describe("Filter by vendor type name (contains match)"),
       country: z.string().optional().describe("Filter by country"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, vendor_type, country, limit, offset }) => {
       try {
@@ -110,8 +110,8 @@ export function registerProcurementTools(
       ends_before: z.string().optional().describe("Contracts ending before this date (YYYY-MM-DD)"),
       short_description: z.string().optional().describe("Filter by name (contains match)"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ vendor, state, po_number, starts_after, ends_before, short_description, query, limit, offset }) => {
       try {
@@ -191,8 +191,8 @@ export function registerProcurementTools(
       vendor: z.string().optional().describe("Filter by vendor name (contains match)"),
       status: z.string().optional().describe("Filter by status"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ vendor, status, query, limit, offset }) => {
       try {
@@ -249,7 +249,7 @@ export function registerProcurementTools(
     "List cost centers (cmn_cost_center). Used for procurement cost allocation across contracts, POs, and expenses.",
     {
       name: z.string().optional().describe("Filter by name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, limit }) => {
       try {
@@ -278,10 +278,10 @@ export function registerProcurementTools(
     {
       source_table: z.string().optional().describe("Filter by source table, e.g. 'ast_contract', 'alm_asset'"),
       cost_center: z.string().optional().describe("Filter by cost center name (contains match)"),
-      amount_greater_than: z.number().optional().describe("Filter expenses greater than this amount"),
+      amount_greater_than: z.coerce.number().optional().describe("Filter expenses greater than this amount"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ source_table, cost_center, amount_greater_than, query, limit, offset }) => {
       try {
@@ -317,8 +317,8 @@ export function registerProcurementTools(
       state: z.string().optional().describe("Filter by state: 'requested', 'approved', 'rejected', 'cancelled'"),
       approver: z.string().optional().describe("Filter by approver name (contains match)"),
       document_id: z.string().optional().describe("Filter by the sys_id of the document being approved"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ source_table, state, approver, document_id, limit, offset }) => {
       try {
@@ -351,7 +351,7 @@ export function registerProcurementTools(
     "List transfer orders (alm_transfer_order). Move assets between stockrooms as part of procurement fulfillment.",
     {
       stage: z.string().optional().describe("Filter by stage"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ stage, limit }) => {
       try {
@@ -378,7 +378,7 @@ export function registerProcurementTools(
     "List stockrooms (alm_stockroom). Physical or virtual locations where assets are stored.",
     {
       name: z.string().optional().describe("Filter by name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, limit }) => {
       try {

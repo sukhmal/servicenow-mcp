@@ -27,8 +27,8 @@ export function registerTableTools(
       table: z.string().describe("Table name, e.g. 'incident', 'sys_user'"),
       query: z.string().optional().describe("Encoded query string, e.g. 'active=true^priority=1'"),
       fields: z.string().optional().describe("Comma-separated field names to return"),
-      limit: z.number().min(1).max(100).optional().describe("Max records to return (default 20, max 100)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records to return (default 20, max 100)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ table, query, fields, limit, offset }) => {
       try {

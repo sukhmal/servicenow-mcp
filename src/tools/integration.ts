@@ -15,7 +15,7 @@ export function registerIntegrationTools(
     {
       name: z.string().optional().describe("Message name (contains match)"),
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, active, limit }) => {
       try {
@@ -67,7 +67,7 @@ export function registerIntegrationTools(
       topic: z.string().optional().describe("Topic filter (contains match)"),
       agent: z.string().optional().describe("Agent/MID server name"),
       created_after: z.string().optional().describe("Created after datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ state, queue, topic, agent, created_after, limit }) => {
       try {
@@ -96,8 +96,8 @@ export function registerIntegrationTools(
     "sn_ecc_queue_stuck",
     "Find stuck ECC Queue records — items processing for too long, indicating MID server issues",
     {
-      min_minutes: z.number().optional().describe("Minimum minutes in processing state (default 15)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      min_minutes: z.coerce.number().optional().describe("Minimum minutes in processing state (default 15)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ min_minutes, limit }) => {
       try {
@@ -122,7 +122,7 @@ export function registerIntegrationTools(
     {
       status: z.string().optional().describe("Status filter (Up, Down)"),
       name: z.string().optional().describe("MID server name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ status, name, limit }) => {
       try {
@@ -152,7 +152,7 @@ export function registerIntegrationTools(
       status: z.string().optional().describe("HTTP status code"),
       http_method: z.string().optional().describe("HTTP method (GET, POST, PUT, PATCH, DELETE)"),
       created_after: z.string().optional().describe("Created after datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ url, status, http_method, created_after, limit }) => {
       try {
@@ -183,7 +183,7 @@ export function registerIntegrationTools(
       action: z.string().optional().describe("Action name (contains match)"),
       status: z.string().optional().describe("Execution status"),
       created_after: z.string().optional().describe("Created after datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ flow, action, status, created_after, limit }) => {
       try {

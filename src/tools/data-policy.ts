@@ -19,8 +19,8 @@ export function registerDataPolicyTools(
       apply_import_set: z.boolean().optional().describe("Filter by whether it applies to import sets"),
       enforce_ui: z.boolean().optional().describe("Filter by whether it also acts as a UI policy on the client"),
       short_description: z.string().optional().describe("Filter by description (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ table, active, apply_soap, apply_import_set, enforce_ui, short_description, limit, offset }) => {
       try {

@@ -17,8 +17,8 @@ export function registerSchemaTools(
       label: z.string().optional().describe("Filter by table label (contains match)"),
       super_class: z.string().optional().describe("Filter by parent table name to find child tables"),
       scope: z.string().optional().describe("Filter by application scope"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, label, super_class, scope, limit, offset }) => {
       try {
@@ -56,7 +56,7 @@ export function registerSchemaTools(
       column_name: z.string().optional().describe("Filter by specific column name"),
       type: z.string().optional().describe("Filter by internal type (e.g. 'reference', 'string', 'integer', 'boolean', 'journal')"),
       include_inherited: z.boolean().optional().describe("Include fields inherited from parent tables (default true)"),
-      limit: z.number().min(1).max(200).optional().describe("Max records (default 100)"),
+      limit: z.coerce.number().min(1).max(200).optional().describe("Max records (default 100)"),
     },
     async ({ table, column_name, type, include_inherited, limit }) => {
       try {

@@ -17,8 +17,8 @@ export function registerNotificationTools(
       name: z.string().optional().describe("Filter by notification name (contains match)"),
       event_name: z.string().optional().describe("Filter by event name (contains match)"),
       active: z.boolean().optional().describe("Filter by active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ table, name, event_name, active, limit, offset }) => {
       try {
@@ -75,7 +75,7 @@ export function registerNotificationTools(
       instance: z.string().optional().describe("Filter by notification sys_id that generated this email"),
       start_time: z.string().optional().describe("Start of time range"),
       end_time: z.string().optional().describe("End of time range"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ recipient, subject, type, state, instance, start_time, end_time, limit }) => {
       try {
@@ -116,7 +116,7 @@ export function registerNotificationTools(
       instance: z.string().optional().describe("Filter by record sys_id that triggered the event"),
       start_time: z.string().optional().describe("Start of time range"),
       end_time: z.string().optional().describe("End of time range"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, table, state, instance, start_time, end_time, limit }) => {
       try {

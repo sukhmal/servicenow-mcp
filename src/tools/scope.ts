@@ -16,7 +16,7 @@ export function registerScopeTools(
       name: z.string().optional().describe("Scope name (contains match)"),
       scope: z.string().optional().describe("Scope namespace (contains match)"),
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, scope, active, limit }) => {
       try {
@@ -47,7 +47,7 @@ export function registerScopeTools(
       target_scope: z.string().optional().describe("Target scope name (contains match) — the app being accessed"),
       status: z.enum(["Allowed", "Requested", "Invalidated"]).optional().describe("Status filter"),
       operation: z.string().optional().describe("Operation (e.g., execute, read, write)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ source_scope, target_scope, status, operation, limit }) => {
       try {
@@ -75,7 +75,7 @@ export function registerScopeTools(
     "sn_scope_pending_access",
     "List pending cross-scope access requests — requests awaiting admin approval",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ limit }) => {
       try {
@@ -98,7 +98,7 @@ export function registerScopeTools(
     {
       target_scope: z.string().optional().describe("Target scope name (contains match)"),
       status: z.string().optional().describe("Status filter"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ target_scope, status, limit }) => {
       try {

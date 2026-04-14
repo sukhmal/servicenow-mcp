@@ -17,8 +17,8 @@ export function registerUpdateSetTools(
       application: z.string().optional().describe("Filter by application/scope name"),
       name: z.string().optional().describe("Filter by name (contains match)"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ state, application, name, query, limit, offset }) => {
       try {
@@ -71,8 +71,8 @@ export function registerUpdateSetTools(
       update_set_sys_id: z.string().describe("The sys_id of the update set"),
       type: z.string().optional().describe("Filter by update type/name (e.g. 'Business Rule', 'Script Include', 'UI Policy')"),
       target_name: z.string().optional().describe("Filter by target record name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ update_set_sys_id, type, target_name, limit, offset }) => {
       try {

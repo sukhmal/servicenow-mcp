@@ -17,8 +17,8 @@ export function registerUiTools(
     {
       name: z.string().optional().describe("Filter by page name (contains match)"),
       category: z.string().optional().describe("Filter by category"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, category, limit, offset }) => {
       try {
@@ -68,7 +68,7 @@ export function registerUiTools(
     "List UI Macros (sys_ui_macro) — reusable Jelly template components",
     {
       name: z.string().optional().describe("Filter by macro name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, limit }) => {
       try {
@@ -102,7 +102,7 @@ export function registerUiTools(
       name: z.string().optional().describe("Filter by name (contains match)"),
       active: z.boolean().optional().describe("Filter by active status"),
       global: z.boolean().optional().describe("Filter by global flag"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, active, global: isGlobal, limit }) => {
       try {
@@ -247,7 +247,7 @@ export function registerUiTools(
     "List Service Portals (sp_portal). Shows portal configuration and settings.",
     {
       title: z.string().optional().describe("Filter by portal title (contains match)"),
-      limit: z.number().min(1).max(50).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(50).optional().describe("Max records (default 20)"),
     },
     async ({ title, limit }) => {
       try {
@@ -279,8 +279,8 @@ export function registerUiTools(
     {
       name: z.string().optional().describe("Filter by widget name (contains match)"),
       id: z.string().optional().describe("Filter by widget ID (exact match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, id, limit, offset }) => {
       try {
@@ -329,7 +329,7 @@ export function registerUiTools(
     {
       title: z.string().optional().describe("Filter by page title (contains match)"),
       id: z.string().optional().describe("Filter by page ID (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ title, id, limit }) => {
       try {
@@ -363,7 +363,7 @@ export function registerUiTools(
     {
       name: z.string().optional().describe("Filter by provider name (contains match)"),
       type: z.enum(["service", "factory", "directive", "filter"]).optional().describe("Filter by provider type"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, type, limit }) => {
       try {

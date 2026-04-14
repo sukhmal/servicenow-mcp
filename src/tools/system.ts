@@ -17,8 +17,8 @@ export function registerSystemTools(
     {
       name: z.string().optional().describe("Filter by property name (contains match), e.g. 'glide.ui'"),
       description: z.string().optional().describe("Filter by description (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, description, limit, offset }) => {
       try {
@@ -80,8 +80,8 @@ export function registerSystemTools(
       name: z.string().optional().describe("Filter by job name (contains match)"),
       state: z.enum(["0", "1", "2"]).optional().describe("Filter by state: 0=Ready, 1=Processing, 2=Complete"),
       trigger_type: z.enum(["0", "1", "2", "3", "7", "8"]).optional().describe("0=Run Once, 1=Daily, 2=Weekly, 3=Monthly, 7=Run at, 8=On Demand"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, state, trigger_type, limit, offset }) => {
       try {
@@ -135,8 +135,8 @@ export function registerSystemTools(
       name: z.string().optional().describe("Filter by app name (contains match)"),
       scope: z.string().optional().describe("Filter by scope namespace (contains match)"),
       active: z.boolean().optional().describe("Filter by active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, scope, active, limit, offset }) => {
       try {
@@ -186,8 +186,8 @@ export function registerSystemTools(
     {
       application: z.string().optional().describe("Filter by application sys_id or name"),
       title: z.string().optional().describe("Filter by module title (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ application, title, limit, offset }) => {
       try {

@@ -13,7 +13,7 @@ export function registerDiagnosticsTools(
     "sn_diag_cluster_nodes",
     "List cluster node status (sys_cluster_state) — shows all application nodes, their status, and build info",
     {
-      limit: z.number().min(1).max(50).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(50).optional().describe("Max records (default 20)"),
     },
     async ({ limit }) => {
       try {
@@ -38,7 +38,7 @@ export function registerDiagnosticsTools(
       detail: z.string().optional().describe("Detail text filter (contains match)"),
       created_after: z.string().optional().describe("Created after datetime"),
       created_before: z.string().optional().describe("Created before datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, detail, created_after, created_before, limit }) => {
       try {
@@ -65,7 +65,7 @@ export function registerDiagnosticsTools(
     "sn_diag_cache_flushes",
     "List recent cache flush events — shows when and why caches were flushed",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ limit }) => {
       try {
@@ -86,9 +86,9 @@ export function registerDiagnosticsTools(
     "List slow queries that exceeded the 5-second execution threshold",
     {
       table: z.string().optional().describe("Table name filter"),
-      min_duration: z.number().optional().describe("Minimum duration in ms"),
+      min_duration: z.coerce.number().optional().describe("Minimum duration in ms"),
       created_after: z.string().optional().describe("Created after datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ table, min_duration, created_after, limit }) => {
       try {
@@ -120,7 +120,7 @@ export function registerDiagnosticsTools(
       user: z.string().optional().describe("User who made the change"),
       created_after: z.string().optional().describe("Created after datetime"),
       created_before: z.string().optional().describe("Created before datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ document_key, tablename, fieldname, user, created_after, created_before, limit }) => {
       try {
@@ -152,7 +152,7 @@ export function registerDiagnosticsTools(
       tablename: z.string().optional().describe("Table name"),
       user: z.string().optional().describe("User who deleted"),
       created_after: z.string().optional().describe("Deleted after datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ tablename, user, created_after, limit }) => {
       try {
@@ -181,7 +181,7 @@ export function registerDiagnosticsTools(
       severity: z.string().optional().describe("Severity filter"),
       category: z.string().optional().describe("Category filter (performance, security, manageability)"),
       check: z.string().optional().describe("Scan check name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ severity, category, check, limit }) => {
       try {

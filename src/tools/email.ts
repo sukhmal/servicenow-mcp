@@ -20,7 +20,7 @@ export function registerEmailTools(
       target_table: z.string().optional().describe("Target table name"),
       created_after: z.string().optional().describe("Created after datetime"),
       created_before: z.string().optional().describe("Created before datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ type, state, recipients, subject, target_table, created_after, created_before, limit }) => {
       try {
@@ -67,7 +67,7 @@ export function registerEmailTools(
     "List failed/errored emails — emails that could not be sent",
     {
       created_after: z.string().optional().describe("Created after datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ created_after, limit }) => {
       try {
@@ -93,7 +93,7 @@ export function registerEmailTools(
     {
       record_sys_id: z.string().describe("The record sys_id that triggered the notification (e.g., incident sys_id)"),
       notification_name: z.string().optional().describe("Notification name to filter (contains match)"),
-      limit: z.number().min(1).max(20).optional().describe("Max records per step (default 10)"),
+      limit: z.coerce.number().min(1).max(20).optional().describe("Max records per step (default 10)"),
     },
     async ({ record_sys_id, notification_name, limit }) => {
       try {
@@ -137,7 +137,7 @@ export function registerEmailTools(
       name: z.string().optional().describe("Notification name (contains match)"),
       collection: z.string().optional().describe("Table name"),
       active: z.boolean().optional().describe("Active status (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, collection, active, limit }) => {
       try {
@@ -166,7 +166,7 @@ export function registerEmailTools(
     "List email account configurations (inbound/outbound SMTP/POP/IMAP settings)",
     {
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ active, limit }) => {
       try {

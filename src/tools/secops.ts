@@ -20,8 +20,8 @@ export function registerSecOpsTools(
       assignment_group: z.string().optional().describe("Assignment group name (contains match)"),
       active: z.boolean().optional().describe("Active status"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ priority, state, category, subcategory, assignment_group, active, query, limit, offset }) => {
       try {
@@ -87,7 +87,7 @@ export function registerSecOpsTools(
       state: z.string().optional().describe("State filter"),
       cmdb_ci: z.string().optional().describe("CI name (contains match)"),
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ severity, state, cmdb_ci, active, limit }) => {
       try {
@@ -115,9 +115,9 @@ export function registerSecOpsTools(
     "sn_vulnerability_entry_list",
     "List vulnerability entries from NVD (sn_vul_nvd_entry)",
     {
-      cvss_score_min: z.number().optional().describe("Minimum CVSS score"),
+      cvss_score_min: z.coerce.number().optional().describe("Minimum CVSS score"),
       text_search: z.string().optional().describe("Search in name or description"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ cvss_score_min, text_search, limit }) => {
       try {
@@ -146,7 +146,7 @@ export function registerSecOpsTools(
       type: z.string().optional().describe("Observable type (IP, Domain, URL, FileHash)"),
       value: z.string().optional().describe("Observable value (contains match)"),
       reputation: z.string().optional().describe("Reputation level"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ type, value, reputation, limit }) => {
       try {

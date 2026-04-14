@@ -15,8 +15,8 @@ export function registerAttachmentTools(
     {
       table_name: z.string().describe("Table name (e.g., 'incident', 'change_request')"),
       table_sys_id: z.string().optional().describe("Record sys_id to list attachments for a specific record"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ table_name, table_sys_id, limit, offset }) => {
       try {
@@ -54,10 +54,10 @@ export function registerAttachmentTools(
       file_name: z.string().optional().describe("File name (contains match)"),
       content_type: z.string().optional().describe("Content type (e.g., 'application/pdf', 'image/png')"),
       table_name: z.string().optional().describe("Filter by source table"),
-      min_size: z.number().optional().describe("Minimum file size in bytes"),
-      max_size: z.number().optional().describe("Maximum file size in bytes"),
+      min_size: z.coerce.number().optional().describe("Minimum file size in bytes"),
+      max_size: z.coerce.number().optional().describe("Maximum file size in bytes"),
       created_after: z.string().optional().describe("Created after datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ file_name, content_type, table_name, min_size, max_size, created_after, limit }) => {
       try {

@@ -18,7 +18,7 @@ export function registerCatalogTools(
       title: z.string().optional().describe("Filter by title (contains match)"),
       parent: z.string().optional().describe("Filter by parent category sys_id"),
       active: z.boolean().optional().describe("Filter by active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ title, parent, active, limit }) => {
       try {
@@ -57,8 +57,8 @@ export function registerCatalogTools(
       active: z.boolean().optional().describe("Filter by active status"),
       type: z.enum(["sc_cat_item", "sc_cat_item_producer", "sc_cat_item_guide"]).optional()
         .describe("Item type: standard, record producer, or order guide"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, category, active, type, limit, offset }) => {
       try {
@@ -154,7 +154,7 @@ export function registerCatalogTools(
       cat_item: z.string().optional().describe("Filter by catalog item sys_id"),
       name: z.string().optional().describe("Filter by name (contains match)"),
       active: z.boolean().optional().describe("Filter by active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ cat_item, name, active, limit }) => {
       try {
@@ -207,8 +207,8 @@ export function registerCatalogTools(
       state: z.string().optional().describe("Filter by state"),
       opened_by: z.string().optional().describe("Filter by opened_by user sys_id"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ cat_item, state, opened_by, query, limit, offset }) => {
       try {
@@ -245,7 +245,7 @@ export function registerCatalogTools(
       request_item: z.string().optional().describe("Filter by parent requested item sys_id"),
       state: z.string().optional().describe("Filter by state"),
       assignment_group: z.string().optional().describe("Filter by assignment group (name contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ request_item, state, assignment_group, limit }) => {
       try {

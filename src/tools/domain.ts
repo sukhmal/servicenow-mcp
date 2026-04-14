@@ -15,7 +15,7 @@ export function registerDomainTools(
     {
       parent: z.string().optional().describe("Parent domain sys_id"),
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ parent, active, limit }) => {
       try {
@@ -42,7 +42,7 @@ export function registerDomainTools(
     "Check domain visibility grants for a user (sys_user_visibility)",
     {
       user: z.string().describe("User name or sys_id"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ user, limit }) => {
       try {
@@ -67,7 +67,7 @@ export function registerDomainTools(
     "Check domain visibility grants for a group (sys_user_group_visibility)",
     {
       group: z.string().describe("Group name or sys_id"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ group, limit }) => {
       try {
@@ -93,7 +93,7 @@ export function registerDomainTools(
     {
       domain: z.string().optional().describe("Domain sys_id"),
       overrides_table: z.string().optional().describe("Table being overridden (e.g., sys_script, sysevent_email_action)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ domain, overrides_table, limit }) => {
       try {

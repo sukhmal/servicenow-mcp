@@ -13,7 +13,7 @@ export function registerUpgradeTools(
     "sn_upgrade_history",
     "List upgrade/patch history (sys_upgrade_history) — all upgrades and patches applied to this instance",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ limit }) => {
       try {
@@ -36,7 +36,7 @@ export function registerUpgradeTools(
     {
       upgrade_history: z.string().optional().describe("Upgrade history sys_id to filter by specific upgrade"),
       type: z.string().optional().describe("Record type (e.g., sys_script, sys_ui_action, sysevent_email_action)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ upgrade_history, type, limit }) => {
       try {
@@ -66,7 +66,7 @@ export function registerUpgradeTools(
       name: z.string().optional().describe("Record name (contains match)"),
       category: z.string().optional().describe("Category filter"),
       updated_after: z.string().optional().describe("Updated after datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ type, name, category, updated_after, limit }) => {
       try {

@@ -16,7 +16,7 @@ export function registerKnowledgeTools(
       query: z.string().describe("Search query text"),
       knowledge_base: z.string().optional().describe("Knowledge base sys_id to search within"),
       category: z.string().optional().describe("Category sys_id to filter"),
-      limit: z.number().min(1).max(50).optional().describe("Max results (default 10)"),
+      limit: z.coerce.number().min(1).max(50).optional().describe("Max results (default 10)"),
     },
     async ({ query, knowledge_base, category, limit }) => {
       try {
@@ -56,7 +56,7 @@ export function registerKnowledgeTools(
     "List knowledge bases",
     {
       active: z.boolean().optional().describe("Filter by active status (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ active, limit }) => {
       try {
@@ -85,7 +85,7 @@ export function registerKnowledgeTools(
       knowledge_base: z.string().optional().describe("Knowledge base sys_id"),
       parent_category: z.string().optional().describe("Parent category sys_id (for subcategories)"),
       active: z.boolean().optional().describe("Filter by active (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ knowledge_base, parent_category, active, limit }) => {
       try {
@@ -118,8 +118,8 @@ export function registerKnowledgeTools(
       workflow_state: z.enum(["draft", "review", "published", "retired"]).optional().describe("Workflow state"),
       author: z.string().optional().describe("Author name (contains match)"),
       text_search: z.string().optional().describe("Search in short_description or text"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ knowledge_base, category, workflow_state, author, text_search, limit, offset }) => {
       try {
@@ -150,7 +150,7 @@ export function registerKnowledgeTools(
     "List feedback for a knowledge article",
     {
       article_sys_id: z.string().describe("Knowledge article sys_id"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ article_sys_id, limit }) => {
       try {

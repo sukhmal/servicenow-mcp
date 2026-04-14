@@ -16,7 +16,7 @@ export function registerCicdTools(
       name: z.string().optional().describe("Test name (contains match)"),
       active: z.boolean().optional().describe("Active status (default true)"),
       sys_scope: z.string().optional().describe("Application scope sys_id"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, active, sys_scope, limit }) => {
       try {
@@ -46,7 +46,7 @@ export function registerCicdTools(
     {
       name: z.string().optional().describe("Suite name (contains match)"),
       active: z.boolean().optional().describe("Active status (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, active, limit }) => {
       try {
@@ -76,7 +76,7 @@ export function registerCicdTools(
       test: z.string().optional().describe("Test sys_id"),
       test_suite: z.string().optional().describe("Test suite sys_id"),
       status: z.enum(["success", "failure", "error"]).optional().describe("Result status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ test, test_suite, status, limit }) => {
       try {
@@ -106,7 +106,7 @@ export function registerCicdTools(
       name: z.string().optional().describe("App name (contains match)"),
       scope: z.string().optional().describe("App scope (contains match)"),
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, scope, active, limit }) => {
       try {
@@ -147,7 +147,7 @@ export function registerCicdTools(
     {
       name: z.string().optional().describe("Plugin name (contains match)"),
       active: z.boolean().optional().describe("Active status (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ name, active, limit }) => {
       try {

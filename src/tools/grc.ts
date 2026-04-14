@@ -16,7 +16,7 @@ export function registerGrcTools(
       name: z.string().optional().describe("Policy name (contains match)"),
       state: z.string().optional().describe("State filter"),
       active: z.boolean().optional().describe("Active status (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, state, active, limit }) => {
       try {
@@ -48,7 +48,7 @@ export function registerGrcTools(
       policy: z.string().optional().describe("Policy sys_id"),
       state: z.string().optional().describe("State filter"),
       active: z.boolean().optional().describe("Active status (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, policy, state, active, limit }) => {
       try {
@@ -79,10 +79,10 @@ export function registerGrcTools(
     {
       name: z.string().optional().describe("Risk name (contains match)"),
       state: z.string().optional().describe("State filter"),
-      risk_score_min: z.number().optional().describe("Minimum risk score"),
+      risk_score_min: z.coerce.number().optional().describe("Minimum risk score"),
       category: z.string().optional().describe("Category"),
       owner: z.string().optional().describe("Owner name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, state, risk_score_min, category, owner, limit }) => {
       try {
@@ -114,7 +114,7 @@ export function registerGrcTools(
       name: z.string().optional().describe("Engagement name (contains match)"),
       state: z.string().optional().describe("State filter"),
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, state, active, limit }) => {
       try {
@@ -144,7 +144,7 @@ export function registerGrcTools(
       state: z.string().optional().describe("State filter"),
       severity: z.string().optional().describe("Severity filter"),
       profile: z.string().optional().describe("Profile name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ state, severity, profile, limit }) => {
       try {

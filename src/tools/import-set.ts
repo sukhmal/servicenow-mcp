@@ -15,8 +15,8 @@ export function registerImportSetTools(
     {
       table_name: z.string().optional().describe("Filter by import set table name (contains match)"),
       state: z.string().optional().describe("Filter by state (e.g. 'loaded', 'transformed', 'error')"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ table_name, state, limit, offset }) => {
       try {
@@ -49,8 +49,8 @@ export function registerImportSetTools(
     {
       import_set: z.string().describe("sys_id of the import set"),
       state: z.string().optional().describe("Filter by row state (e.g. 'inserted', 'updated', 'error', 'ignored')"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ import_set, state, limit, offset }) => {
       try {
@@ -98,7 +98,7 @@ export function registerImportSetTools(
       target_table: z.string().optional().describe("Filter by target table name"),
       name: z.string().optional().describe("Filter by transform map name (contains match)"),
       active: z.boolean().optional().describe("Filter by active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ source_table, target_table, name, active, limit }) => {
       try {

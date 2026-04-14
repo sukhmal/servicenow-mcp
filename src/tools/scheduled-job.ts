@@ -16,7 +16,7 @@ export function registerScheduledJobTools(
       name: z.string().optional().describe("Job name (contains match)"),
       active: z.boolean().optional().describe("Active status"),
       run_type: z.string().optional().describe("Run type: on_demand, daily, weekly, monthly, periodically"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, active, run_type, limit }) => {
       try {
@@ -46,7 +46,7 @@ export function registerScheduledJobTools(
       state: z.enum(["0", "1", "2"]).optional().describe("State: 0=Ready, 1=Queued, 2=Running"),
       name: z.string().optional().describe("Trigger name (contains match)"),
       claimed_by: z.string().optional().describe("Node system_id that claimed the job"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ state, name, claimed_by, limit }) => {
       try {
@@ -73,8 +73,8 @@ export function registerScheduledJobTools(
     "sn_scheduled_stuck_jobs",
     "Find stuck or orphaned scheduled jobs — triggers that are running or queued on nodes that may no longer exist",
     {
-      min_minutes: z.number().optional().describe("Minimum minutes a job has been running/queued (default 30)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      min_minutes: z.coerce.number().optional().describe("Minimum minutes a job has been running/queued (default 30)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ min_minutes, limit }) => {
       try {
@@ -110,7 +110,7 @@ export function registerScheduledJobTools(
     "Get recent execution history for a scheduled job by checking sys_trigger runs",
     {
       job_name: z.string().describe("Scheduled job name (exact or contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 10)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 10)"),
     },
     async ({ job_name, limit }) => {
       try {

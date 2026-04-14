@@ -26,8 +26,8 @@ export function registerS2pTools(
       business_owner: z.string().optional().describe("Filter by business owner name (contains match)"),
       product_name: z.string().optional().describe("Filter by product name (contains match)"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ status, sourcing_stage, request_type, supplier, business_owner, product_name, query, limit, offset }) => {
       try {
@@ -107,8 +107,8 @@ export function registerS2pTools(
       negotiation_type: z.string().optional().describe("Filter by negotiation type (RFQ, RFP, etc.)"),
       rfq_status: z.string().optional().describe("Filter by RFX status"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ negotiation_event_stage, negotiation_type, rfq_status, query, limit, offset }) => {
       try {
@@ -188,7 +188,7 @@ export function registerS2pTools(
       negotiation_event: z.string().optional().describe("Filter by sourcing event sys_id"),
       sourcing_activity: z.string().optional().describe("Filter by sourcing request sys_id"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ negotiation_stage, negotiation_outcome, supplier, negotiation_event, sourcing_activity, query, limit }) => {
       try {
@@ -223,7 +223,7 @@ export function registerS2pTools(
     {
       state: z.string().optional().describe("Filter by state"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ state, query, limit }) => {
       try {
@@ -256,8 +256,8 @@ export function registerS2pTools(
       preferred: z.string().optional().describe("Filter by preferred status"),
       registration_country: z.string().optional().describe("Filter by country of registration"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, onboarded, preferred, registration_country, query, limit, offset }) => {
       try {
@@ -328,8 +328,8 @@ export function registerS2pTools(
       supplier: z.string().optional().describe("Filter by supplier name (contains match)"),
       number: z.string().optional().describe("Filter by requisition number"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ status, supplier, number, query, limit, offset }) => {
       try {
@@ -396,8 +396,8 @@ export function registerS2pTools(
       purchasing_entity: z.string().optional().describe("Filter by purchasing entity sys_id"),
       purchase_order_type: z.string().optional().describe("Filter by order type"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ status, supplier, number, legal_entity, purchasing_entity, purchase_order_type, query, limit, offset }) => {
       try {
@@ -484,8 +484,8 @@ export function registerS2pTools(
       state: z.string().optional().describe("Filter by line item state"),
       has_remaining: z.boolean().optional().describe("Only show lines not fully invoiced (invoiced_percent < 100)"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ supplier, state, has_remaining, query, limit, offset }) => {
       try {
@@ -522,8 +522,8 @@ export function registerS2pTools(
       received_after: z.string().optional().describe("Received after this date (YYYY-MM-DD)"),
       received_before: z.string().optional().describe("Received before this date (YYYY-MM-DD)"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ status, purchase_order_line, received_after, received_before, query, limit, offset }) => {
       try {
@@ -564,8 +564,8 @@ export function registerS2pTools(
       number: z.string().optional().describe("Filter by invoice number"),
       external_invoice_number: z.string().optional().describe("Filter by external/supplier invoice number"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ state, supplier, purchase_order, approval, type, number, external_invoice_number, query, limit, offset }) => {
       try {
@@ -651,7 +651,7 @@ export function registerS2pTools(
       status: z.string().optional().describe("Filter by status"),
       invoice: z.string().optional().describe("Filter by invoice sys_id"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ status, invoice, query, limit }) => {
       try {
@@ -684,7 +684,7 @@ export function registerS2pTools(
       category: z.string().optional().describe("Filter by category"),
       state: z.string().optional().describe("Filter by state"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ category, state, query, limit }) => {
       try {
@@ -719,8 +719,8 @@ export function registerS2pTools(
       assigned_to: z.string().optional().describe("Filter by assigned user name (contains match)"),
       opened_by: z.string().optional().describe("Filter by requester name (contains match)"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ state, priority, assigned_to, opened_by, query, limit, offset }) => {
       try {
@@ -788,7 +788,7 @@ export function registerS2pTools(
     {
       approving_table: z.string().optional().describe("Filter by table being approved, e.g. 'sn_shop_purchase_order'"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ approving_table, query, limit }) => {
       try {
@@ -819,7 +819,7 @@ export function registerS2pTools(
     {
       state: z.string().optional().describe("Filter by state"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ state, query, limit }) => {
       try {
@@ -848,8 +848,8 @@ export function registerS2pTools(
     "List S2P supplier products (sn_shop_supplier_product). Products and services offered by suppliers in the S2P catalog.",
     {
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ query, limit, offset }) => {
       try {
@@ -877,7 +877,7 @@ export function registerS2pTools(
     "sn_s2p_payment_term_list",
     "List S2P payment terms (sn_shop_payment_term). Payment terms define when invoices are due (Net 30, Net 60, etc.).",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ limit }) => {
       try {
@@ -897,7 +897,7 @@ export function registerS2pTools(
     "sn_s2p_delivery_location_list",
     "List S2P delivery locations (sn_shop_delivery_location). Locations where goods can be shipped.",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ limit }) => {
       try {
@@ -917,7 +917,7 @@ export function registerS2pTools(
     "sn_s2p_shipping_method_list",
     "List S2P shipping methods (sn_shop_shipping_method).",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ limit }) => {
       try {
@@ -937,7 +937,7 @@ export function registerS2pTools(
     "sn_s2p_product_group_list",
     "List S2P product groups (sn_shop_product_group). Product groups categorize supplier products.",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ limit }) => {
       try {
@@ -959,7 +959,7 @@ export function registerS2pTools(
     "sn_s2p_legal_entity_list",
     "List legal entities (sn_fin_legal_entity). The buying organizations in S2P — suppliers, POs, and invoices are linked to legal entities.",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ limit }) => {
       try {
@@ -980,7 +980,7 @@ export function registerS2pTools(
     "List purchasing entities (sn_fin_purchasing_entity). Business units that can issue purchase orders, linked to legal entities and ERP sources.",
     {
       name: z.string().optional().describe("Filter by name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, limit }) => {
       try {
@@ -1008,8 +1008,8 @@ export function registerS2pTools(
       display_name: z.string().optional().describe("Filter by account name (contains match)"),
       type: z.string().optional().describe("Filter by account type"),
       inactive: z.boolean().optional().describe("Filter by inactive status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ display_name, type, inactive, limit, offset }) => {
       try {
@@ -1037,7 +1037,7 @@ export function registerS2pTools(
     "sn_s2p_tax_code_list",
     "List tax codes (sn_fin_tax_code). Tax codes applied to invoice lines and PO lines.",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ limit }) => {
       try {
@@ -1057,7 +1057,7 @@ export function registerS2pTools(
     "sn_s2p_erp_source_list",
     "List ERP sources (sn_fin_erp_source). External ERP systems (SAP, Oracle) integrated with S2P.",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ limit }) => {
       try {
@@ -1077,7 +1077,7 @@ export function registerS2pTools(
     "sn_s2p_period_list",
     "List fiscal periods (sn_fin_period). Used for financial reporting and invoice processing.",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ limit }) => {
       try {
@@ -1097,7 +1097,7 @@ export function registerS2pTools(
     "sn_s2p_uom_list",
     "List units of measure (sn_fin_uom). UOMs for invoice and PO line quantities.",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 50)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 50)"),
     },
     async ({ limit }) => {
       try {
@@ -1121,7 +1121,7 @@ export function registerS2pTools(
     {
       state: z.string().optional().describe("Filter by state"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ state, query, limit }) => {
       try {
@@ -1148,7 +1148,7 @@ export function registerS2pTools(
     "sn_s2p_tolerance_rule_list",
     "List invoice tolerance rules (sn_ap_apm_invoice_tolerance_rule). Define acceptable variance thresholds for invoice matching — when exceeded, exceptions are raised.",
     {
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ limit }) => {
       try {

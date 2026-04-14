@@ -62,7 +62,7 @@ export function registerExecuteTools(
       fields: z
         .array(z.string())
         .describe("Fields to return, e.g. ['number', 'short_description', 'state']"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
       order_by: z.string().optional().describe("Field to order by"),
       order_dir: z.enum(["asc", "desc"]).optional().describe("Order direction (default 'asc')"),
       display_value: z.boolean().optional().describe("Return display values instead of internal values (default true)"),

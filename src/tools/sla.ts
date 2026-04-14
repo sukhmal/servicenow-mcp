@@ -16,7 +16,7 @@ export function registerSlaTools(
       table: z.string().optional().describe("Filter by table name, e.g. 'incident'"),
       name: z.string().optional().describe("Filter by SLA name (contains match)"),
       active: z.boolean().optional().describe("Filter by active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ table, name, active, limit }) => {
       try {
@@ -69,7 +69,7 @@ export function registerSlaTools(
       stage: z.enum(["in_progress", "paused", "cancelled", "achieved", "breached"]).optional().describe("Filter by SLA stage"),
       has_breached: z.boolean().optional().describe("Filter by breached status"),
       table: z.string().optional().describe("Filter by task table name"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ task, sla, stage, has_breached, table, limit }) => {
       try {

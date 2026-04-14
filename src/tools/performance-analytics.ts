@@ -18,7 +18,7 @@ export function registerPerformanceAnalyticsTools(
       sort_by: z.enum(["VALUE", "CHANGE", "CHANGE_PERC", "LABEL", "TARGET"]).optional().describe("Sort field"),
       sort_dir: z.enum(["ASC", "DESC"]).optional().describe("Sort direction"),
       display_value: z.boolean().optional().describe("Return formatted values (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Limit results per page"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Limit results per page"),
     },
     async ({ indicator_sys_id, breakdown, sort_by, sort_dir, display_value, limit }) => {
       try {
@@ -46,7 +46,7 @@ export function registerPerformanceAnalyticsTools(
       name: z.string().optional().describe("Indicator name (contains match)"),
       frequency: z.string().optional().describe("Collection frequency (daily, weekly, monthly)"),
       active: z.boolean().optional().describe("Active status (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, frequency, active, limit }) => {
       try {
@@ -76,7 +76,7 @@ export function registerPerformanceAnalyticsTools(
     {
       name: z.string().optional().describe("Breakdown name (contains match)"),
       active: z.boolean().optional().describe("Active status (default true)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, active, limit }) => {
       try {
@@ -105,7 +105,7 @@ export function registerPerformanceAnalyticsTools(
     {
       name: z.string().optional().describe("Dashboard name (contains match)"),
       active: z.boolean().optional().describe("Active status"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, active, limit }) => {
       try {

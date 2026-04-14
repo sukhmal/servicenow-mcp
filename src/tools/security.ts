@@ -20,8 +20,8 @@ export function registerSecurityTools(
       user_name: z.string().optional().describe("Filter by username (contains match)"),
       active: z.boolean().optional().describe("Filter by active status"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, email, user_name, active, query, limit, offset }) => {
       try {
@@ -119,8 +119,8 @@ export function registerSecurityTools(
       type: z.string().optional().describe("Filter by group type"),
       active: z.boolean().optional().describe("Filter by active status"),
       manager: z.string().optional().describe("Filter by manager name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, type, active, manager, limit, offset }) => {
       try {
@@ -210,8 +210,8 @@ export function registerSecurityTools(
     {
       name: z.string().optional().describe("Filter by role name (contains match)"),
       elevated_privilege: z.boolean().optional().describe("Filter by elevated privilege flag"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ name, elevated_privilege, limit, offset }) => {
       try {

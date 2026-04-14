@@ -23,8 +23,8 @@ export function registerAssetTools(
       location: z.string().optional().describe("Location name (contains match)"),
       sys_class_name: z.string().optional().describe("Asset class: alm_asset, alm_hardware, alm_consumable, alm_license"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ asset_tag, serial_number, model, model_category, install_status, substatus, assigned_to, location, sys_class_name, query, limit, offset }) => {
       try {
@@ -80,7 +80,7 @@ export function registerAssetTools(
       install_status: z.string().optional().describe("Install status"),
       assigned_to: z.string().optional().describe("Assigned to user (contains match)"),
       location: z.string().optional().describe("Location (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ model, serial_number, install_status, assigned_to, location, limit }) => {
       try {
@@ -113,7 +113,7 @@ export function registerAssetTools(
       license_type: z.string().optional().describe("License type"),
       install_status: z.string().optional().describe("Install status"),
       query: z.string().optional().describe("Additional encoded query"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ software_model, license_type, install_status, query, limit }) => {
       try {
@@ -144,7 +144,7 @@ export function registerAssetTools(
       installed_on: z.string().optional().describe("CI sys_id to check installations for"),
       software_name: z.string().optional().describe("Software display name (contains match)"),
       publisher: z.string().optional().describe("Publisher name (contains match)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ installed_on, software_name, publisher, limit }) => {
       try {
@@ -175,7 +175,7 @@ export function registerAssetTools(
       model_category: z.string().optional().describe("Model category name (contains match)"),
       manufacturer: z.string().optional().describe("Manufacturer name (contains match)"),
       sys_class_name: z.string().optional().describe("Model class (cmdb_model, cmdb_hardware_product_model, cmdb_software_product_model)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ name, model_category, manufacturer, sys_class_name, limit }) => {
       try {

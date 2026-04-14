@@ -21,7 +21,7 @@ export function registerEventManagementTools(
       state: z.string().optional().describe("Event processing state"),
       created_after: z.string().optional().describe("Created after datetime"),
       created_before: z.string().optional().describe("Created before datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ severity, source, node, event_class, type, state, created_after, created_before, limit }) => {
       try {
@@ -60,7 +60,7 @@ export function registerEventManagementTools(
       cmdb_ci: z.string().optional().describe("Configuration item name (contains match)"),
       assignment_group: z.string().optional().describe("Assignment group name (contains match)"),
       created_after: z.string().optional().describe("Created after datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ severity, state, acknowledged, group_source, cmdb_ci, assignment_group, created_after, limit }) => {
       try {
@@ -117,7 +117,7 @@ export function registerEventManagementTools(
     {
       active: z.boolean().optional().describe("Filter by active status (default true)"),
       source: z.string().optional().describe("Source filter"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ active, source, limit }) => {
       try {

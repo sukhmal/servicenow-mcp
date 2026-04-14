@@ -18,8 +18,8 @@ export function registerApprovalTools(
       document_id: z.string().optional().describe("Task/document sys_id being approved"),
       source_table: z.string().optional().describe("Source table name (e.g., change_request, sc_request)"),
       created_after: z.string().optional().describe("Created after datetime"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
-      offset: z.number().min(0).optional().describe("Offset for pagination"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      offset: z.coerce.number().min(0).optional().describe("Offset for pagination"),
     },
     async ({ state, approver, document_id, source_table, created_after, limit, offset }) => {
       try {
@@ -51,7 +51,7 @@ export function registerApprovalTools(
     {
       user: z.string().describe("User name or sys_id"),
       source_table: z.string().optional().describe("Filter by source table"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ user, source_table, limit }) => {
       try {
@@ -115,7 +115,7 @@ export function registerApprovalTools(
       delegate: z.string().optional().describe("Delegate user name (contains match)"),
       user: z.string().optional().describe("Delegating user name (contains match)"),
       active: z.boolean().optional().describe("Active only (within date range)"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ delegate, user, active, limit }) => {
       try {
@@ -145,9 +145,9 @@ export function registerApprovalTools(
     "sn_approval_stale",
     "Find stale approvals — requests that have been pending for more than N days",
     {
-      days: z.number().min(1).describe("Number of days threshold"),
+      days: z.coerce.number().min(1).describe("Number of days threshold"),
       source_table: z.string().optional().describe("Filter by source table"),
-      limit: z.number().min(1).max(100).optional().describe("Max records (default 20)"),
+      limit: z.coerce.number().min(1).max(100).optional().describe("Max records (default 20)"),
     },
     async ({ days, source_table, limit }) => {
       try {
