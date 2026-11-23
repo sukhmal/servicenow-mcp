@@ -8,11 +8,11 @@ import { EXECUTE } from "../../annotations.js";
 export function registerBatchTools(
   server: McpServer,
   client: ServiceNowClient,
-  _mode: Mode
+  mode: Mode
 ): void {
   server.tool(
     "sn_batch_request",
-    "Execute multiple REST API calls in a single batch request (/api/now/v1/batch). Reduces round trips and improves performance by up to 66%. All requests must be independent (no data dependencies between them).",
+    "Execute multiple REST API calls in a single batch request (/api/now/v1/batch). Reduces round trips and improves performance by up to 66%. All requests must be independent (no data dependencies between them). In debug mode only GET requests are permitted.",
     {
       requests: z.array(z.object({
         id: z.string().describe("Unique request identifier"),
@@ -24,6 +24,15 @@ export function registerBatchTools(
     EXECUTE,
     async ({ requests }) => {
       try {
+        if (mode !== "develop") {
+          const writes = requests.filter((r) => r.method !== "GET");
+          if (writes.length > 0) {
+            const ids = writes.map((r) => `${r.id} (${r.method})`).join(", ");
+            return errorResult(
+              `Write requests are not allowed in debug mode. Set SERVICENOW_MODE=develop to perform writes. Offending requests: ${ids}`
+            );
+          }
+        }
         const result = await client.batchRequest(requests);
         return jsonResult(result);
       } catch (error) {

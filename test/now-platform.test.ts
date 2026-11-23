@@ -131,3 +131,31 @@ describe("now-platform annotations", () => {
     expect(tools.get("sn_report_list")!.annotations).toMatchObject({ readOnlyHint: true });
   });
 });
+
+describe("sn_batch_request mode gating", () => {
+  const reads = [{ id: "1", url: "/api/now/table/incident", method: "GET" }];
+  const mixed = [...reads, { id: "2", url: "/api/now/table/incident", method: "POST", body: { short_description: "x" } }];
+  const isError = (r: unknown) => (r as { isError?: boolean }).isError === true;
+
+  it("debug mode allows GET-only batches", async () => {
+    const { tools, client } = register("debug");
+    const res = await tools.get("sn_batch_request")!.handler({ requests: reads });
+    expect(isError(res)).toBe(false);
+    expect(client.calls.some((c) => c[0] === "batch")).toBe(true);
+  });
+
+  it.each(["POST", "PUT", "PATCH", "DELETE"])("debug mode rejects a batch containing %s without calling the API", async (method) => {
+    const { tools, client } = register("debug");
+    const res = await tools.get("sn_batch_request")!.handler({ requests: [...reads, { id: "w", url: "/api/now/table/incident/abc", method }] });
+    expect(isError(res)).toBe(true);
+    expect(JSON.stringify(res)).toContain(`w (${method})`);
+    expect(client.calls.some((c) => c[0] === "batch")).toBe(false);
+  });
+
+  it("develop mode allows write batches", async () => {
+    const { tools, client } = register("develop");
+    const res = await tools.get("sn_batch_request")!.handler({ requests: mixed });
+    expect(isError(res)).toBe(false);
+    expect(client.calls.some((c) => c[0] === "batch")).toBe(true);
+  });
+});

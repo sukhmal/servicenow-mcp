@@ -17,7 +17,7 @@ Read-only tools (`both`) work in `debug` and `develop` modes; `develop` tools re
 | `sn_attachment_get` | both | Get attachment metadata by sys_id (file name, content type, size, table info) |
 | `sn_attachment_list` | both | List attachments for a specific record or table. Returns metadata including file name, size, content type. |
 | `sn_attachment_search` | both | Search attachments by file name, content type, or size across all tables |
-| `sn_batch_request` | both | Execute multiple REST API calls in a single batch request (/api/now/v1/batch). Reduces round trips and improves performance by up to 66%. All requests must be independent (no data dependencies between them). |
+| `sn_batch_request` | both | Execute multiple REST API calls in a single batch request (/api/now/v1/batch). Reduces round trips and improves performance by up to 66%. All requests must be independent (no data dependencies between them). In debug mode only GET requests are permitted. |
 | `sn_currency_list` | both | List currencies (fx_currency) — the currency codes/symbols configured on the instance for currency fields. |
 | `sn_data_policy_for_table` | both | Find all active data policies and their rules for a specific table. Essential for debugging 'mandatory field' or 'read-only' errors when creating/updating records via API, import sets, or the UI. Returns policies with their conditions and field rules in one call. |
 | `sn_data_policy_get` | both | Get a data policy by sys_id with all its field rules. Shows the policy conditions, which fields are mandatory or read-only, and where it applies (API, import sets, UI). |
